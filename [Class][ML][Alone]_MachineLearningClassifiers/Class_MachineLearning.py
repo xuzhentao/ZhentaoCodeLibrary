@@ -5,7 +5,7 @@
 #	Description: 			Utilize Machine Learning Method in analyzing the MMU sensor's data, and provide prediction.
 #	Tested Environment:		Windows 10 (64 bits) w/ Python 3.6
 #	Required Libraries:		numpy:			pip install numpy
-#							matplotlib: 	pip install matploblit
+#							matplotlib: 	pip install matplotlib
 #							scikit-learn: 	pip install scikit-learn
 ##################################################################
 
@@ -222,18 +222,18 @@ class Class_MachineLearning():
 
 
 # #Sample Call:
-# if __name__ == "__main__":
+if __name__ == "__main__":
 
-# 	#generate fake data.
-# 	X = np.random.randn(10000,10)
-# 	Y = np.random.randint(low = 0,high = 2, size = (10000,))
+	#generate fake data.
+	X = np.random.randn(10000,10)
+	Y = np.random.randint(low = 0,high = 2, size = (10000,))
 
-# 	#machine learning classifiers.
-# 	ml = Class_MachineLearning(whether_plot = True, whether_mute = False)
-# 	ml.fun_loadData(X,Y,X,Y)
-# 	list_accuracy, list_classifiers = ml.classification_explore()
+	#machine learning classifiers.
+	ml = Class_MachineLearning(whether_plot = True, whether_mute = False)
+	ml.fun_loadData(X,Y,X,Y)
+	list_accuracy, list_classifiers = ml.classification_explore()
 
-# 	#printting result
-# 	print("The result = ")
-# 	for accuracy, classifier in list(zip(list_accuracy, list_classifiers)):
-# 		print(classifier, '\t', accuracy)
+	#printting result
+	print("The result = ")
+	for accuracy, classifier in list(zip(list_accuracy, list_classifiers)):
+		print(classifier, '\t', accuracy)

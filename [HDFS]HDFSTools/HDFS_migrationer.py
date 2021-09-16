@@ -14,8 +14,8 @@ for itemtype, actiontype in list_item_action:
     dir_target = "/user/" + username + "/reco/PROD/incidences/itemtype=" + itemtype + "/actiontype=" + actiontype + "/appfamily=" + appfamily + "/"
 
     # check if source directory exist:
-    cmd_ls = "hdfs dfs -ls " + dir_source;
-    list_date = [j.split('=')[1] for j in [i.split('/')[-1] for i in subprocess.Popen(cmd_ls, shell=True,
+    cmd_ls = "hdfs dfs -ls " + dir_source
+    list_date = [j.split("=")[1] for j in [i.split("/")[-1] for i in subprocess.Popen(cmd_ls, shell=True,
                                                                                       stdout=subprocess.PIPE).stdout.read().split(
         '\n') if len(i) != 0] if j[:3] == 'day']
     list_date = [dd for dd in list_date if dd >= daterange[0] and dd <= daterange[1]]

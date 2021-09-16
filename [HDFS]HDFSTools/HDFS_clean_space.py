@@ -2,12 +2,11 @@
 # Author: Frank Xu
 # (This is specifically for the cleaning before explore page.)
 
-import subprocess
 import argparse
 import os
+import subprocess
 
-
-#Sample Call:
+# Sample Call:
 
 # python clean_personalhive.py --username frank.xu
 
@@ -18,141 +17,129 @@ list_trust = ['frank.xu']
 
 ########### Arg Parsing and Configuration Station ###########
 parser = argparse.ArgumentParser(prog='Cleaning HDFS')
-parser.add_argument('--username', help='Your User Name', default = '')
+parser.add_argument('--username', help='Your User Name', default='')
 
 args = parser.parse_args()
 username = args.username.strip()
-username_nodot = username.replace('.','')
+username_nodot = username.replace('.', '')
 
 # Prevent sudo user using this.
 if username_nodot == '':
-	print("Please add a username here using --username flag")
-	exit(1)
+    print("Please add a username here using --username flag")
+    exit(1)
 
-#first check.
+# first check.
 if username_nodot == 'smuledata' or username_nodot == 'smule' or username_nodot == 'root':
-	print("Attention: Please never try smuledata / smule using this script.")
-	print("Abort !")
-	exit(1)
+    print("Attention: Please never try smuledata / smule using this script.")
+    print("Abort !")
+    exit(1)
 
-#dual check.
+# dual check.
 if not username in list_trust:
-	print("Attention: Please make sure you understand this script before running this script !!!, then add your name into the 'list_trust' variable, then run it again.");
-	print("Abort !")
-	exit(1)
+    print(
+        "Attention: Please make sure you understand this script before running this script !!!, then add your name into the 'list_trust' variable, then run it again.");
+    print("Abort !")
+    exit(1)
 ############################################
 os.system('clear')
-
 
 ##########HDFS PART ###############
 print("==========Start Removing HDFS Files==========")
 
 set_hdfscmd = set([
-	"hdfs dfs -rm -r /user/" + username + "/reco/PROD/training_data/*", #MUST DO
-	"hdfs dfs -rm -r /user/" + username + "/reco/PROD/training_signals/signal=user_platform/*", #MUST DO.
-	"hdfs dfs -rm -r /user/" + username + "/reco/PROD/training_signals/signal=user_version/*", #MUST DO.
-	"hdfs dfs -rm -r /user/" + username + "/reco/PROD/training_metrics/*", #MUST DO
-	"hdfs dfs -rm -r /user/" + username + "/reco/PROD/user_attributes/*", #MUST DO
-	"hdfs dfs -rm -r /user/" + username + "/reco/PROD/training_data_metrics/*", #MUST DO
-	"hdfs dfs -rm -r /user/" + username + "/reco/PROD/models/*", #MUST DO
-	"hdfs dfs -rm -r /user/" + username + "/reco/PROD/canonical_comps_lyrics/*",
-	"hdfs dfs -rm -r /user/" + username + "/reco/PROD/active_users/*",
-	"hdfs dfs -rm -r /user/" + username + "/reco/PROD/collabfilt_lyrics_metrics/*",
-	"hdfs dfs -rm -r /user/" + username + "/reco/PROD/collabfilt_lyrics_scores/*",
-	"hdfs dfs -rm -r /user/" + username + "/reco/PROD/duplicate_comps_by_family/*",
-	# "hdfs dfs -rm -r /user/" + username + "/reco/PROD/el_orc/*", #don't want to do this, since el_orc is the most button level and won't change.
-	"hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/action/*",
-	"hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/action_extended/*",
-	"hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/cntry/*",
-	"hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/ctopic/*",
-	"hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/loc/*",
-	"hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/ltopic/*",
-	"hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/similar/*",
-	"hdfs dfs -rm -r /user/" + username + "/reco/PROD/incidences/*",#MUST DO
-	"hdfs dfs -rm -r /user/" + username + "/reco/PROD/logins/*",#MUST DO
-	"hdfs dfs -rm -r /user/" + username + "/reco/PROD/login_attributes/*",#MUST DO
-	"hdfs dfs -rm -r /user/" + username + "/reco/PROD/user_attributes/*",#MUST DO
-	"hdfs dfs -rm -r /user/" + username + "/reco/PROD/user_activities/*",#MY PARTITION>
-                   
+    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/training_data/*",  # MUST DO
+    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/training_signals/signal=user_platform/*",  # MUST DO.
+    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/training_signals/signal=user_version/*",  # MUST DO.
+    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/training_metrics/*",  # MUST DO
+    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/user_attributes/*",  # MUST DO
+    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/training_data_metrics/*",  # MUST DO
+    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/models/*",  # MUST DO
+    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/canonical_comps_lyrics/*",
+    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/active_users/*",
+    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/collabfilt_lyrics_metrics/*",
+    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/collabfilt_lyrics_scores/*",
+    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/duplicate_comps_by_family/*",
+    # "hdfs dfs -rm -r /user/" + username + "/reco/PROD/el_orc/*", #don't want to do this, since el_orc is the most button level and won't change.
+    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/action/*",
+    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/action_extended/*",
+    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/cntry/*",
+    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/ctopic/*",
+    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/loc/*",
+    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/ltopic/*",
+    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/similar/*",
+    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/incidences/*",  # MUST DO
+    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/logins/*",  # MUST DO
+    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/login_attributes/*",  # MUST DO
+    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/user_attributes/*",  # MUST DO
+    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/user_activities/*",  # MY PARTITION>
+
 ])
 
-
 for hdfscmd in set_hdfscmd:
-	print("\t --> Removing HDFS Files in " + hdfscmd.split(' ')[-1])
-	proc=subprocess.Popen( hdfscmd,shell=True,stdout=subprocess.PIPE);
-	_ = proc.stdout.read() #wait until finishied running.
-
-
-
-
+    print("\t --> Removing HDFS Files in " + hdfscmd.split(' ')[-1])
+    proc = subprocess.Popen(hdfscmd, shell=True, stdout=subprocess.PIPE);
+    _ = proc.stdout.read()  # wait until finishied running.
 
 ##############HIVE TABLE PART##############
 print("==========Start Removing and Re-creating Hive Tables.==========")
 set_db_table = [
-				"reco_prod_" + username_nodot + "."	+	"training_data",
-				# "reco_prod_" + username_nodot + "."	+	"training_signals",
-				# "reco_prod_" + username_nodot + "."	+	"training_metrics", 			#no such hive tables
-				"reco_prod_" + username_nodot + "."	+	"user_attributes",
-				#"reco_prod_" + username_nodot + "."	+	"training_data_metrics",		#no such hive tables
-				"reco_prod_" + username_nodot + "."	+	"canonical_comps_lyrics",
-				"reco_prod_" + username_nodot + "."	+	"active_users",
-				#"reco_prod_" + username_nodot + "."	+	"collabfilt_lyrics_metrics",	#no such hive tables
-				"reco_prod_" + username_nodot + "."	+	"collabfilt_lyrics_scores",
-				"reco_prod_" + username_nodot + "."	+	"duplicate_comps_by_family",
-				# "reco_prod_" + username_nodot + "."	+	"el_orc",
-				"reco_prod_" + username_nodot + "."	+	"action_impressions",
-				"reco_prod_" + username_nodot + "."	+	"cntry_impressions",
-				"reco_prod_" + username_nodot + "."	+	"ctopic_impressions",
-				#"reco_prod_" + username_nodot + "."	+	"loc_impressions",				#no such hive tables
-				"reco_prod_" + username_nodot + "."	+	"ltopic_impressions",
-				"reco_prod_" + username_nodot + "."	+	"similar_impressions",
-				"reco_prod_" + username_nodot + "."	+	"incidences",
-				"reco_prod_" + username_nodot + "."	+	"active_users",
-				"reco_prod_" + username_nodot + "."	+	"logins",
-				"reco_prod_" + username_nodot + "."	+	"login_attributes",
-				"reco_prod_" + username_nodot + "."	+	"user_attributes",
-				"reco_prod_" + username_nodot + "."	+	"user_activities"
-				]
-
+    "reco_prod_" + username_nodot + "." + "training_data",
+    # "reco_prod_" + username_nodot + "."	+	"training_signals",
+    # "reco_prod_" + username_nodot + "."	+	"training_metrics", 			#no such hive tables
+    "reco_prod_" + username_nodot + "." + "user_attributes",
+    # "reco_prod_" + username_nodot + "."	+	"training_data_metrics",		#no such hive tables
+    "reco_prod_" + username_nodot + "." + "canonical_comps_lyrics",
+    "reco_prod_" + username_nodot + "." + "active_users",
+    # "reco_prod_" + username_nodot + "."	+	"collabfilt_lyrics_metrics",	#no such hive tables
+    "reco_prod_" + username_nodot + "." + "collabfilt_lyrics_scores",
+    "reco_prod_" + username_nodot + "." + "duplicate_comps_by_family",
+    # "reco_prod_" + username_nodot + "."	+	"el_orc",
+    "reco_prod_" + username_nodot + "." + "action_impressions",
+    "reco_prod_" + username_nodot + "." + "cntry_impressions",
+    "reco_prod_" + username_nodot + "." + "ctopic_impressions",
+    # "reco_prod_" + username_nodot + "."	+	"loc_impressions",				#no such hive tables
+    "reco_prod_" + username_nodot + "." + "ltopic_impressions",
+    "reco_prod_" + username_nodot + "." + "similar_impressions",
+    "reco_prod_" + username_nodot + "." + "incidences",
+    "reco_prod_" + username_nodot + "." + "active_users",
+    "reco_prod_" + username_nodot + "." + "logins",
+    "reco_prod_" + username_nodot + "." + "login_attributes",
+    "reco_prod_" + username_nodot + "." + "user_attributes",
+    "reco_prod_" + username_nodot + "." + "user_activities"
+]
 
 for db_table in set_db_table:
-	print("==>Table:" + db_table)
-	str_query_droptable = "DROP TABLE " + db_table;
-	str_query_showcreate = "SHOW CREATE TABLE " + db_table;
-	
-	
-	cmd = "hive -e \"" + str_query_showcreate + "\""
-	print("\t-->Show create with cmd:\t" + cmd)
-	proc=subprocess.Popen( cmd ,shell=True,stdout=subprocess.PIPE)
-	str_query_create = proc.stdout.read()
+    print("==>Table:" + db_table)
+    str_query_droptable = "DROP TABLE " + db_table;
+    str_query_showcreate = "SHOW CREATE TABLE " + db_table;
 
-	str_query_create = str_query_create.replace('\n',' ')
-	str_query_create = str_query_create.replace('`','\`')
-	cmd = "hive -e \"" + str_query_droptable + "\""
-	print("\t-->Drop table with cmd:\t" + cmd)
-	proc=subprocess.Popen( cmd ,shell=True,stdout=subprocess.PIPE);
-	_ = proc.stdout.read()
+    cmd = "hive -e \"" + str_query_showcreate + "\""
+    print("\t-->Show create with cmd:\t" + cmd)
+    proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+    str_query_create = proc.stdout.read()
 
-	cmd = "hive -e \"" + str_query_create + "\""
-	print("\t--> Recreate with cmd:\t" + cmd)
-	proc = subprocess.Popen( cmd ,shell=True,stdout=subprocess.PIPE);
-	_ = proc.stdout.read()
-	print("")
+    str_query_create = str_query_create.replace('\n', ' ')
+    str_query_create = str_query_create.replace('`', '\`')
+    cmd = "hive -e \"" + str_query_droptable + "\""
+    print("\t-->Drop table with cmd:\t" + cmd)
+    proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE);
+    _ = proc.stdout.read()
 
+    cmd = "hive -e \"" + str_query_create + "\""
+    print("\t--> Recreate with cmd:\t" + cmd)
+    proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE);
+    _ = proc.stdout.read()
+    print("")
 
 print("===DONE Removing===")
 
-
-str_query_repair = "MSCK REPAIR TABLE reco_prod_" + username_nodot +".training_data"
+str_query_repair = "MSCK REPAIR TABLE reco_prod_" + username_nodot + ".training_data"
 cmd = "hive -e \"" + str_query_create + "\""
 print("\t--> Repair with cmd:\t" + cmd)
-_ = subprocess.Popen( cmd ,shell=True,stdout=subprocess.PIPE).stdout.read();
+_ = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE).stdout.read();
 print("===ALL DONE====")
 
-
-
-
-#Some Shell script to use under the extreme case when the table doesn't exist at the very beginining.
+# Some Shell script to use under the extreme case when the table doesn't exist at the very beginining.
 
 # hive -e "CREATE EXTERNAL TABLE \`reco_prod_frankxu.training_data\`(   \`datapoint_id\` string COMMENT 'ID of training data point',    \`feature_vector\` map<string,double> COMMENT 'attribute name-value pairs',    \`label\` double COMMENT 'data point label') PARTITIONED BY (    \`algorithm\` string COMMENT 'recommendation algorithm (key type)',    \`itemtype\` string COMMENT 'type of recommended item',    \`appfamily\` string COMMENT 'app family',    \`features\` string COMMENT 'name of feature set',    \`day\` string) ROW FORMAT DELIMITED    FIELDS TERMINATED BY '\u0001'    LINES TERMINATED BY '\n'  STORED AS INPUTFORMAT    'org.apache.hadoop.mapred.SequenceFileInputFormat'  OUTPUTFORMAT    'org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat' LOCATION   'hdfs://nameservice1/user/frank.xu/reco/PROD/training_data' TBLPROPERTIES (   'transient_lastDdlTime'='1534806940') "
 # hive -e "CREATE TABLE \`reco_prod_frankxu.training_signals\`(   \`datapoint_id\` string COMMENT 'ID of training data point (uniquely identifies impression)',    \`attribute_id\` string COMMENT 'attribute ID (machine learning feature name)',    \`value\` double COMMENT 'attribute value',    \`ts\` bigint COMMENT 'timestamp (unused)') PARTITIONED BY (    \`algorithm\` string COMMENT 'recommendation algorithm (key type)',    \`itemtype\` string COMMENT 'type of recommended item',    \`appfamily\` string COMMENT 'app family',    \`signal\` string COMMENT 'name of signal (matches query producing signal)',    \`day\` string COMMENT 'day of impression for which signal is computed') ROW FORMAT DELIMITED    FIELDS TERMINATED BY '\u0001'    LINES TERMINATED BY '\n'  STORED AS INPUTFORMAT    'org.apache.hadoop.mapred.SequenceFileInputFormat'  OUTPUTFORMAT    'org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat' LOCATION   'hdfs://nameservice1/user/frank.xu/reco/PROD/training_signals' TBLPROPERTIES (   'transient_lastDdlTime'='1534806961') "
