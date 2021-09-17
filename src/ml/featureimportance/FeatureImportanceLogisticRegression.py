@@ -15,7 +15,7 @@ import numpy as np
 from sklearn import linear_model
 
 
-class Class_MachineLearningFeatureRanking():
+class FeatureImportanceLogisticRegression():
 
     def __init__(self):
         self.nd2_X = None
@@ -42,18 +42,3 @@ class Class_MachineLearningFeatureRanking():
         return list_tuple_featurename_weights
 
 
-# #sample call
-
-if __name__ == "__main__":
-    nd2_X = np.random.randn(10000, 10)
-    nd_y = np.random.randn(10000, )
-
-    nd_y[nd_y > 0] = 1
-    nd_y[nd_y <= 0] = 0
-
-    nd2_X[nd_y == 0, 0] = np.random.randn()
-    nd2_X[nd_y == 1, 0] = 2 + np.random.randn()
-
-    fr = Class_MachineLearningFeatureRanking()
-    fr.fun_loadData(nd2_X=nd2_X, nd_y=nd_y, list_feature=[str(i) for i in range(10)])
-    print(fr.fun_calcRank_LogisticRegression())

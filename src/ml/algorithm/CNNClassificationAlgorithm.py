@@ -10,27 +10,33 @@
 #							time, random, os: built-in libraries
 ######################################################################################
 
+import os
 import random
 
 import matplotlib.pyplot as plt
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
+
+tf.disable_v2_behavior()
 
 
-class Class_CNN():
+class CNNClassificationAlgorithm():
 
     # initialize.
-    def __init__(self, float_weightSTD=0.005, total_epoches=2, batch_size=100):
+    def __init__(self, float_weightSTD=0.005, total_epoches=2, batch_size=100, io_dir: str = "./", random_seed=0):
 
         # the weight and bias term.
         self.weights = {}
         self.biases = {}
         self.float_weightSTD = float_weightSTD
+        np.random.seed(random_seed)
         self.__initializeWeight__()  # intialize the weight and biases
 
         # training configuration.
         self.total_epoches = total_epoches
         self.batch_size = batch_size
+        self.io_dir = io_dir
+        self.random_seed = random_seed
 
         # training data.
         self.X_train = None
@@ -59,15 +65,15 @@ class Class_CNN():
     def __initializeWeight__(self):
 
         self.weights = {
-            'wc1': tf.Variable(tf.random_normal([5, 5, 1, 5], stddev=self.float_weightSTD)),
-            'wc2': tf.Variable(tf.random_normal([5, 5, 5, 10], stddev=self.float_weightSTD)),
-            'wc3': tf.Variable(tf.random_normal([5, 5, 10, 10], stddev=self.float_weightSTD)),
-            'wc4': tf.Variable(tf.random_normal([6, 6, 10, 10], stddev=self.float_weightSTD))}
+            'wc1': tf.Variable(tf.random.normal([5, 5, 1, 5], stddev=self.float_weightSTD)),
+            'wc2': tf.Variable(tf.random.normal([5, 5, 5, 10], stddev=self.float_weightSTD)),
+            'wc3': tf.Variable(tf.random.normal([5, 5, 10, 10], stddev=self.float_weightSTD)),
+            'wc4': tf.Variable(tf.random.normal([6, 6, 10, 10], stddev=self.float_weightSTD))}
         self.biases = {
-            'bc1': tf.Variable(tf.random_normal([5], stddev=self.float_weightSTD)),
-            'bc2': tf.Variable(tf.random_normal([10], stddev=self.float_weightSTD)),
-            'bc3': tf.Variable(tf.random_normal([10], stddev=self.float_weightSTD)),
-            'bc4': tf.Variable(tf.random_normal([10], stddev=self.float_weightSTD))
+            'bc1': tf.Variable(tf.random.normal([5], stddev=self.float_weightSTD)),
+            'bc2': tf.Variable(tf.random.normal([10], stddev=self.float_weightSTD)),
+            'bc3': tf.Variable(tf.random.normal([10], stddev=self.float_weightSTD)),
+            'bc4': tf.Variable(tf.random.normal([10], stddev=self.float_weightSTD))
         }
 
     # Create some wrappers for simplicity
@@ -129,7 +135,7 @@ class Class_CNN():
 
         with tf.Session() as sess:
             saver = tf.train.Saver()
-            saver.restore(sess, './trained_session.ckpt')
+            saver.restore(sess, os.path.join(self.io_dir, 'trained_session.ckpt'))
 
             pred_v = sess.run(pred, feed_dict={x: nd2_X_test})
             print(pred_v[:5])
@@ -144,6 +150,7 @@ class Class_CNN():
 
     def fit(self):
 
+        np.random.seed(self.random_seed)
         # the place holder for the neural entwork.
         # x = tf.placeholder(tf.float32, shape = (self.batch_size, 121,136,1))# G Model Year
         x = tf.placeholder(tf.float32, shape=(None, 28, 28, 1))
@@ -211,16 +218,19 @@ class Class_CNN():
                     test_accuracy) + ']')
 
             saver = tf.train.Saver()
-            saver.save(sess, './trained_session.ckpt')
+            saver.save(sess, os.path.join(self.io_dir, 'trained_session.ckpt'))
 
 
 # Sample Call.
 if __name__ == "__main__":
-    from tensorflow.examples.tutorials.mnist import input_data
+    (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
+    x_train, x_test = x_train / 255.0, x_test / 255.0
 
-    mnist = input_data.read_data_sets("/tmp/data/", one_hot=True)
-    nd2_X = mnist.train.images.reshape((mnist.train.images.shape[0], 28, 28, 1))[:20000]
-    nd_y = mnist.train.labels[:20000]
+    nd2_X = np.reshape(x_train, [x_train.shape[0], 28, 28, 1])
+    nd_y = np.zeros((y_train.shape[0], 10))
+    for i in range(y_train.shape[0]):
+        nd_y[i, y_train[i]] = 1
+
     from sklearn.model_selection import train_test_split
 
     nd2_X_train, nd2_X_test, nd_y_train, nd_y_test = train_test_split(nd2_X, nd_y)
