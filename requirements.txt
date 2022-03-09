@@ -6,7 +6,7 @@ matplotlib==3.3.4
 pywebhdfs
 cassandra-driver
 tensorflow_datasets
-keras
+keras==2.6.0
 luigi==3.0.3
 argparse==1.1
 pytest==6.2.3

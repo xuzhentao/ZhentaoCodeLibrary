@@ -1,1 +1,1 @@
-alias pytest='python -m pytest test'
+alias pytest='python3 -m pytest test'

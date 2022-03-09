@@ -129,9 +129,9 @@ class RedBlackTreeNode:
 
     @staticmethod
     def _flip_colors(node):
-        assert (node.left.color == Color.Red)
-        assert (node.right.color == Color.Red)
-        assert (node.color == Color.Black)
+        assert (node.left.color == Color.RED)
+        assert (node.right.color == Color.RED)
+        assert (node.color == Color.BLACK)
         node.left.color = Color.BLACK
         node.right.color = Color.BLACK
         node.color = Color.RED
