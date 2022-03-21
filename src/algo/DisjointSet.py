@@ -2,6 +2,7 @@ import collections
 
 
 class DisjointSet:
+    # Helper function to print the disjoint set.
     def __str__(self):
         s = set(range(self.size))
         mapRoottoNum = collections.defaultdict(list)
@@ -20,15 +21,19 @@ class DisjointSet:
 class DisjointSetQuickFind(DisjointSet):
 
     def __init__(self, size):
+        # the rootest parent for corresponding note.
         self.root = [i for i in range(size)]
         self.size = size
 
+    # only one layers, just return the parent.
     def find(self, x):
         return self.root[x]
 
+    # iterate through the entire node list, and manually move the node belonging to xRoot to yRoot.
     def union(self, x, y):
-        xRoot = self.find(x)
-        yRoot = self.find(y)
+        # find the root to check if are the same set.
+        xRoot: int = self.find(x)
+        yRoot: int = self.find(y)
         if xRoot != yRoot:
             for i in range(self.size):
                 if self.find(i) == xRoot:
@@ -41,6 +46,7 @@ class DisjointSetQuickUnion(DisjointSet):
         self.size = size
 
     def find(self, x):
+        # keep finding the parent until the end.
         while x != self.parents[x]:
             x = self.parents[x]
         return x
@@ -51,9 +57,11 @@ class DisjointSetQuickUnion(DisjointSet):
         if xRoot != yRoot:
             self.parents[xRoot] = yRoot
 
-class DisjointSetUnionwithRank(DisjointSet):
+
+class DisjointSetUnionWithRank(DisjointSet):
     def __init__(self, size):
         self.parents = [i for i in range(size)]
+        # rank means the height of a node.
         self.rank = [1] * size
         self.size = size
 
@@ -75,10 +83,37 @@ class DisjointSetUnionwithRank(DisjointSet):
                 self.rank[yRoot] += 1
 
 
+# Leetcode highly recommend us to memorize this optimization method, which is almost O(1) for any find or union
+# operation.
+class DisjointSetUnionwithRankandPathCompression(DisjointSet):
+    def __init__(self, size):
+        self.parents = [i for i in range(size)]
+        self.rank = [1] * size
+        self.size = size
+
+    def find(self, x) -> int:
+        # terminal condition
+        if x == self.parents[x]:
+            return x
+        # 递归寻找parent，把最终的parent作为当前x的parent
+        self.parents[x] = self.find(self.parents[x])
+        return self.parents[x]
+
+    def union(self, x, y):
+        xRoot = self.find(x)
+        yRoot = self.find(y)
+        if xRoot != yRoot:
+            if self.rank[x] > self.rank[y]:
+                self.parents[yRoot] = xRoot
+            elif self.rank[x] < self.rank[y]:
+                self.parents[xRoot] = yRoot
+            else:
+                self.parents[xRoot] = yRoot
+                self.rank[yRoot] += 1
 
 
 if __name__ == "__main__":
-    dj = DisjointSetUnionwithRank(10)
+    dj = DisjointSetUnionwithRankandPathCompression(10)
     print(dj)
 
     dj.union(1, 3)
