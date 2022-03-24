@@ -1,4 +1,5 @@
 import collections
+from typing import List
 
 
 class DisjointSet:
@@ -63,7 +64,7 @@ class DisjointSetUnionWithRank(DisjointSet):
         self.parents = [i for i in range(size)]
         # rank means the height of a node.
         self.rank = [1] * size
-        self.size = size
+        # self.size = size
 
     def find(self, x):
         while x != self.parents[x]:
@@ -90,6 +91,7 @@ class DisjointSetUnionwithRankandPathCompression(DisjointSet):
         self.parents = [i for i in range(size)]
         self.rank = [1] * size
         self.size = size
+        # self.numComponents = size
 
     def find(self, x) -> int:
         # terminal condition
@@ -103,6 +105,7 @@ class DisjointSetUnionwithRankandPathCompression(DisjointSet):
         xRoot = self.find(x)
         yRoot = self.find(y)
         if xRoot != yRoot:
+            # self.numComponents -= 1
             if self.rank[x] > self.rank[y]:
                 self.parents[yRoot] = xRoot
             elif self.rank[x] < self.rank[y]:
@@ -111,34 +114,34 @@ class DisjointSetUnionwithRankandPathCompression(DisjointSet):
                 self.parents[xRoot] = yRoot
                 self.rank[yRoot] += 1
 
+    # def getNumComponents(self):
+    #     return self.numComponents
+    #
+    # def getComponents(self) -> List[List[int]]:
+    #     s = set(range(self.size))
+    #     mapRoottoNum = collections.defaultdict(list)
+    #     while s:
+    #         e = list(s)[0]
+    #         mapRoottoNum[self.find(e)].append(e)
+    #         s.remove(e)
+    #     return list(mapRoottoNum.values())
+
 
 if __name__ == "__main__":
     dj = DisjointSetUnionwithRankandPathCompression(10)
     print(dj)
+    print(dj.getComponents())
 
     dj.union(1, 3)
     print(dj)
+    print(dj.getComponents())
+
 
     dj.union(2, 4)
     print(dj)
+    print(dj.getComponents())
 
-    dj.union(1, 5)
-    print(dj)
 
-    dj.union(9, 5)
+    dj.union(1, 4)
     print(dj)
-
-    dj.union(9, 2)
-    print(dj)
-
-    dj.union(7, 8)
-    print(dj)
-
-    dj.union(7, 6)
-    print(dj)
-
-    dj.union(1, 6)
-    print(dj)
-
-    dj.union(1, 0)
-    print(dj)
+    print(dj.getComponents())
