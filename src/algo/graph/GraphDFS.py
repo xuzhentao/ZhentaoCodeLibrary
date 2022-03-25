@@ -1,3 +1,12 @@
+######################################################################################
+#	Author: 				Zhentao Xu (frankxu@umich.edu)
+#	Date: 					2022/3/24
+#	Description: 			DFS in Graph
+#	Tested Environment:		Macbook Pro w/ Python 3.9
+#	Required Libraries:		N/A
+######################################################################################
+
+
 from typing import *
 
 

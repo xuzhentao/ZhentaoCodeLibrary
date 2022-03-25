@@ -1,4 +1,4 @@
-from src.algo.DisjointSet import DisjointSetQuickFind
+from algo.graph.DisjointSet import DisjointSetQuickFind
 
 
 def test_disjoint_set_quick_find():

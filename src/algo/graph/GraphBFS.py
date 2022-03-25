@@ -1,3 +1,11 @@
+######################################################################################
+#	Author: 				Zhentao Xu (frankxu@umich.edu)
+#	Date: 					2022/3/24
+#	Description: 			BFS in Graph
+#	Tested Environment:		Macbook Pro w/ Python 3.9
+#	Required Libraries:		N/A
+######################################################################################
+
 from typing import *
 
 
@@ -40,7 +48,6 @@ class GraphBFS:
                 if neighbor not in visited:
                     visited.add(neighbor)
                     queue.append(path[:] + [neighbor])
-
 
 
 if __name__ == "__main__":

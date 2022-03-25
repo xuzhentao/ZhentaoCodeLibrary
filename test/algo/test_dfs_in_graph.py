@@ -1,4 +1,4 @@
-from src.algo.GraphDFS import GraphDFS
+from algo.graph.GraphDFS import GraphDFS
 
 
 def test_find_all_node_in_graph_wih_dfs():

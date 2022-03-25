@@ -1,3 +1,11 @@
+######################################################################################
+#	Author: 				Zhentao Xu (frankxu@umich.edu)
+#	Date: 					2022/3/24
+#	Description: 			Disjoint Set (Union Find)
+#	Tested Environment:		Macbook Pro w/ Python 3.9
+#	Required Libraries:		N/A
+######################################################################################
+
 import collections
 from typing import List
 
@@ -63,8 +71,7 @@ class DisjointSetUnionWithRank(DisjointSet):
     def __init__(self, size):
         self.parents = [i for i in range(size)]
         # rank means the height of a node.
-        self.rank = [1] * size
-        # self.size = size
+        self.rank = [1] * size  # self.size = size
 
     def find(self, x):
         while x != self.parents[x]:
@@ -91,7 +98,7 @@ class DisjointSetUnionwithRankandPathCompression(DisjointSet):
         self.parents = [i for i in range(size)]
         self.rank = [1] * size
         self.size = size
-        # self.numComponents = size
+        self.numComponents = size
 
     def find(self, x) -> int:
         # terminal condition
@@ -105,7 +112,7 @@ class DisjointSetUnionwithRankandPathCompression(DisjointSet):
         xRoot = self.find(x)
         yRoot = self.find(y)
         if xRoot != yRoot:
-            # self.numComponents -= 1
+            self.numComponents -= 1
             if self.rank[x] > self.rank[y]:
                 self.parents[yRoot] = xRoot
             elif self.rank[x] < self.rank[y]:
@@ -114,17 +121,17 @@ class DisjointSetUnionwithRankandPathCompression(DisjointSet):
                 self.parents[xRoot] = yRoot
                 self.rank[yRoot] += 1
 
-    # def getNumComponents(self):
-    #     return self.numComponents
-    #
-    # def getComponents(self) -> List[List[int]]:
-    #     s = set(range(self.size))
-    #     mapRoottoNum = collections.defaultdict(list)
-    #     while s:
-    #         e = list(s)[0]
-    #         mapRoottoNum[self.find(e)].append(e)
-    #         s.remove(e)
-    #     return list(mapRoottoNum.values())
+    def getNumComponents(self):
+        return self.numComponents
+
+    def getComponents(self) -> List[List[int]]:
+        s = set(range(self.size))
+        mapRoottoNum = collections.defaultdict(list)
+        while s:
+            e = list(s)[0]
+            mapRoottoNum[self.find(e)].append(e)
+            s.remove(e)
+            return list(mapRoottoNum.values())
 
 
 if __name__ == "__main__":
@@ -136,11 +143,9 @@ if __name__ == "__main__":
     print(dj)
     print(dj.getComponents())
 
-
     dj.union(2, 4)
     print(dj)
     print(dj.getComponents())
-
 
     dj.union(1, 4)
     print(dj)
