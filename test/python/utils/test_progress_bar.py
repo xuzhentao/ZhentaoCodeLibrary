@@ -1,4 +1,4 @@
-from src.utils.ProgressBar import ProgressBar
+from src.python.utils.ProgressBar import ProgressBar
 
 
 def test_progress_bar():

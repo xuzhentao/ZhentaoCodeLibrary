@@ -1,6 +1,6 @@
 import numpy as np
 
-from src.ml.algorithm.MLClassificationAlgorithms import MLClassificationAlgorithms
+from src.python.ml.algorithm.MLClassificationAlgorithms import MLClassificationAlgorithms
 
 
 def test_ml_algorithm():

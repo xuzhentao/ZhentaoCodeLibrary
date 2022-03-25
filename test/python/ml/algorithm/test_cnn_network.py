@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow.compat.v1 as tf
 
-from src.ml.algorithm.CNNClassificationAlgorithm import CNNClassificationAlgorithm
+from src.python.ml.algorithm.CNNClassificationAlgorithm import CNNClassificationAlgorithm
 
 tf.disable_v2_behavior()
 import tempfile

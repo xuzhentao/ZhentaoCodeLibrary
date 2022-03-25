@@ -1,6 +1,6 @@
 import numpy as np
 
-from src.ml.featureimportance.FeatureImportanceLogisticRegression import FeatureImportanceLogisticRegression
+from src.python.ml.featureimportance.FeatureImportanceLogisticRegression import FeatureImportanceLogisticRegression
 
 
 def test_feature_importance_logistic_regression():
