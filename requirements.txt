@@ -1,9 +1,9 @@
 tensorflow==2.6.0
-scikit-learn==0.22.1
+scikit-learn==1.0.2
 numpy
 scipy==1.6.2
 matplotlib==3.3.4
-pywebhdfs
+pywebhdfs==0.4.1
 cassandra-driver
 tensorflow_datasets
 keras==2.6.0

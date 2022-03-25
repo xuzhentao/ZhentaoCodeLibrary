@@ -91,7 +91,7 @@ class MLClassificationAlgorithms():
         list_classifierName = []
         list_accuracyscore = []
 
-        from sklearn.neighbors.nearest_centroid import NearestCentroid
+        from sklearn.neighbors._nearest_centroid import NearestCentroid
         clf = NearestCentroid()
         clf.fit(train_X, train_Y)
         test_pred = clf.predict(test_X)
