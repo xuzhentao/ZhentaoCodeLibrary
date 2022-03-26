@@ -22,3 +22,9 @@ def test_bellman_ford_algorithm_neg():
     res = sssp.bellman_ford_algorithm(sssp.graph_neg)
     pprint.pprint(res)
     assert (res == {'A': (0, '-'), 'B': (50, 'D'), 'C': (150, 'B'), 'D': (200, 'A')})
+
+def test_improved_bellman_ford_algorithm():
+    sssp = SingleSourceShortestPath()
+    res = sssp.improved_bellman_ford_algorithm(sssp.graph_neg)
+    pprint.pprint(res)
+    assert (res == {'A': (0, '-'), 'B': (50, 'D'), 'C': (150, 'B'), 'D': (200, 'A')})

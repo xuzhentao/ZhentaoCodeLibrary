@@ -5,6 +5,7 @@
 #	Tested Environment:		Macbook Pro w/ Python 3.9
 #	Required Libraries:		N/A
 ######################################################################################
+import collections
 import heapq
 import pprint
 import sys
@@ -74,6 +75,9 @@ class SingleSourceShortestPath:
     def bellman_ford_algorithm(self, graph: Dict[str, List[Tuple[str, int]]]):
         """
         Algorithm introduction links: https://leetcode.com/explore/learn/card/graph/622/single-source-shortest-path-algorithm/3864/
+
+        Algorithm complexity = O(V * E) because the number iteration is V and every time all the edge need to be
+        traversed to update the corresponding destination value.
         :param graph:
         :return:
         """
@@ -120,8 +124,52 @@ class SingleSourceShortestPath:
         helper_visualize_shortest_path_result(dist)
         return dist
 
+    def improved_bellman_ford_algorithm(self, graph: Dict[str, List[Tuple[str, int]]]):
+
+        import numpy as np
+        np.set_printoptions(linewidth=np.inf)
+
+        def print_dp(dp):
+            import copy
+            dp_cp = copy.deepcopy(dp)
+            for i in range(len(dp_cp)):
+                for j in range(len(dp_cp[0])):
+                    dp_cp[i][j] = str(dp_cp[i][j])
+            print(np.array(dp_cp))
+
+        # simple conversion on node name from str to int
+        map_node_to_idx = {n: i for i, n in enumerate(sorted(graph.keys()))}
+        graph: Dict[int, Dict[int, int]] = {map_node_to_idx[k]: {map_node_to_idx[k1]: v1 for k1, v1 in v} for k, v in
+                                            graph.items()}
+        n_node = len(graph)
+        queue = collections.deque([0])
+        dist: Dict[int, (int, int)] = {k: (sys.maxsize, None) for k in range(len(graph))}
+        dist[0] = (0, None)
+        visited: Set[int] = {0}
+
+        while queue:
+            node = queue.popleft()
+            visited.remove(node)
+            for target in graph[node].keys():
+
+                if dist[target][0] > dist[node][0] + graph[node][target]:
+                    if target not in visited:
+                        visited.add(target)
+                        queue.append(target)
+                    dist[target] = (dist[node][0] + graph[node][target], node)
+
+        map_idx_to_node = {v: k for k, v in map_node_to_idx.items()}
+        dist_res = dict()
+        for t, dist_p in list(dist.items()):
+            dist_res[map_idx_to_node[t]] = (dist_p[0], map_idx_to_node[dist_p[1]] if dist_p[1] is not None else '-')
+        helper_visualize_shortest_path_result(dist_res)
+
+        print(dist_res)
+        return dist_res
+
 
 if __name__ == "__main__":
     sssp = SingleSourceShortestPath()
-    pprint.pprint(sssp.dijkstra_algorithm(graph=sssp.graph))
+    # pprint.pprint(sssp.dijkstra_algorithm(graph=sssp.graph))
     pprint.pprint(sssp.bellman_ford_algorithm(graph=sssp.graph_neg))
+    pprint.pprint(sssp.improved_bellman_ford_algorithm(graph=sssp.graph))
