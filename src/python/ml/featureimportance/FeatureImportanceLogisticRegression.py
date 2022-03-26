@@ -40,5 +40,3 @@ class FeatureImportanceLogisticRegression():
         list_tuple_featurename_weights = list(zip(self.list_feature, nd1_weights))
         list_tuple_featurename_weights.sort(key=lambda x: x[1])
         return list_tuple_featurename_weights
-
-

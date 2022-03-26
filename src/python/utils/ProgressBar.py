@@ -21,4 +21,3 @@ class ProgressBar:
         if (self.int_count * 1.0 / self.int_total >= self.float_progress):
             print("[" + self.ID + "] Progress Report  : " + str(int(self.float_progress * 100)) + "%")
             self.float_progress = self.float_progress + self.float_progressDelta
-

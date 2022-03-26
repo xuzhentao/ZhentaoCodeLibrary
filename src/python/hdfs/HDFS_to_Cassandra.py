@@ -53,19 +53,12 @@ cluster = Cluster(casshosts)
 session = cluster.connect()
 session.execute("USE reco_prod")
 
-session.execute(
-    """
+session.execute("""
        INSERT INTO ml_models (day, itemtype, algorithm, modelname, appfamily, binarymodel)
        VALUES (%(day)s, %(itemtype)s, %(algorithm)s, %(modelname)s, %(appfamily)s, %(binarymodel)s)
-    """,
-    {'day': '2019-05-02',
-     'itemtype': 'PERF',
-     'algorithm': 'ACTION',
-     'modelname': 'perf_model_20150828_explorebyactionastrainingdata_negCF_V2',
-     'appfamily': 'SING',
-     'binarymodel': data
-     }
-)
+    """, {'day': '2019-05-02', 'itemtype': 'PERF', 'algorithm': 'ACTION',
+          'modelname': 'perf_model_20150828_explorebyactionastrainingdata_negCF_V2', 'appfamily': 'SING',
+          'binarymodel': data})
 
 # show result of the reco_prod.models.
 res = session.execute("""SELECT * FROM reco_prod.ml_models""").current_rows

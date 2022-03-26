@@ -46,32 +46,33 @@ os.system('clear')
 ##########HDFS PART ###############
 print("==========Start Removing HDFS Files==========")
 
-set_hdfscmd = set([
-    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/training_data/*",  # MUST DO
-    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/training_signals/signal=user_platform/*",  # MUST DO.
-    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/training_signals/signal=user_version/*",  # MUST DO.
-    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/training_metrics/*",  # MUST DO
-    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/user_attributes/*",  # MUST DO
-    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/training_data_metrics/*",  # MUST DO
-    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/models/*",  # MUST DO
-    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/canonical_comps_lyrics/*",
-    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/active_users/*",
-    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/collabfilt_lyrics_metrics/*",
-    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/collabfilt_lyrics_scores/*",
-    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/duplicate_comps_by_family/*",
+set_hdfscmd = set(["hdfs dfs -rm -r /user/" + username + "/reco/PROD/training_data/*",  # MUST DO
+                   "hdfs dfs -rm -r /user/" + username + "/reco/PROD/training_signals/signal=user_platform/*",
+    # MUST DO.
+                   "hdfs dfs -rm -r /user/" + username + "/reco/PROD/training_signals/signal=user_version/*",
+    # MUST DO.
+                   "hdfs dfs -rm -r /user/" + username + "/reco/PROD/training_metrics/*",  # MUST DO
+                   "hdfs dfs -rm -r /user/" + username + "/reco/PROD/user_attributes/*",  # MUST DO
+                   "hdfs dfs -rm -r /user/" + username + "/reco/PROD/training_data_metrics/*",  # MUST DO
+                   "hdfs dfs -rm -r /user/" + username + "/reco/PROD/models/*",  # MUST DO
+                   "hdfs dfs -rm -r /user/" + username + "/reco/PROD/canonical_comps_lyrics/*",
+                   "hdfs dfs -rm -r /user/" + username + "/reco/PROD/active_users/*",
+                   "hdfs dfs -rm -r /user/" + username + "/reco/PROD/collabfilt_lyrics_metrics/*",
+                   "hdfs dfs -rm -r /user/" + username + "/reco/PROD/collabfilt_lyrics_scores/*",
+                   "hdfs dfs -rm -r /user/" + username + "/reco/PROD/duplicate_comps_by_family/*",
     # "hdfs dfs -rm -r /user/" + username + "/reco/PROD/el_orc/*", #don't want to do this, since el_orc is the most button level and won't change.
-    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/action/*",
-    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/action_extended/*",
-    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/cntry/*",
-    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/ctopic/*",
-    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/loc/*",
-    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/ltopic/*",
-    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/similar/*",
-    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/incidences/*",  # MUST DO
-    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/logins/*",  # MUST DO
-    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/login_attributes/*",  # MUST DO
-    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/user_attributes/*",  # MUST DO
-    "hdfs dfs -rm -r /user/" + username + "/reco/PROD/user_activities/*",  # MY PARTITION>
+                   "hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/action/*",
+                   "hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/action_extended/*",
+                   "hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/cntry/*",
+                   "hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/ctopic/*",
+                   "hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/loc/*",
+                   "hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/ltopic/*",
+                   "hdfs dfs -rm -r /user/" + username + "/reco/PROD/impressions/similar/*",
+                   "hdfs dfs -rm -r /user/" + username + "/reco/PROD/incidences/*",  # MUST DO
+                   "hdfs dfs -rm -r /user/" + username + "/reco/PROD/logins/*",  # MUST DO
+                   "hdfs dfs -rm -r /user/" + username + "/reco/PROD/login_attributes/*",  # MUST DO
+                   "hdfs dfs -rm -r /user/" + username + "/reco/PROD/user_attributes/*",  # MUST DO
+                   "hdfs dfs -rm -r /user/" + username + "/reco/PROD/user_activities/*",  # MY PARTITION>
 
 ])
 
@@ -82,31 +83,28 @@ for hdfscmd in set_hdfscmd:
 
 ##############HIVE TABLE PART##############
 print("==========Start Removing and Re-creating Hive Tables.==========")
-set_db_table = [
-    "reco_prod_" + username_nodot + "." + "training_data",
+set_db_table = ["reco_prod_" + username_nodot + "." + "training_data",
     # "reco_prod_" + username_nodot + "."	+	"training_signals",
     # "reco_prod_" + username_nodot + "."	+	"training_metrics", 			#no such hive tables
-    "reco_prod_" + username_nodot + "." + "user_attributes",
+                "reco_prod_" + username_nodot + "." + "user_attributes",
     # "reco_prod_" + username_nodot + "."	+	"training_data_metrics",		#no such hive tables
-    "reco_prod_" + username_nodot + "." + "canonical_comps_lyrics",
-    "reco_prod_" + username_nodot + "." + "active_users",
+                "reco_prod_" + username_nodot + "." + "canonical_comps_lyrics",
+                "reco_prod_" + username_nodot + "." + "active_users",
     # "reco_prod_" + username_nodot + "."	+	"collabfilt_lyrics_metrics",	#no such hive tables
-    "reco_prod_" + username_nodot + "." + "collabfilt_lyrics_scores",
-    "reco_prod_" + username_nodot + "." + "duplicate_comps_by_family",
+                "reco_prod_" + username_nodot + "." + "collabfilt_lyrics_scores",
+                "reco_prod_" + username_nodot + "." + "duplicate_comps_by_family",
     # "reco_prod_" + username_nodot + "."	+	"el_orc",
-    "reco_prod_" + username_nodot + "." + "action_impressions",
-    "reco_prod_" + username_nodot + "." + "cntry_impressions",
-    "reco_prod_" + username_nodot + "." + "ctopic_impressions",
+                "reco_prod_" + username_nodot + "." + "action_impressions",
+                "reco_prod_" + username_nodot + "." + "cntry_impressions",
+                "reco_prod_" + username_nodot + "." + "ctopic_impressions",
     # "reco_prod_" + username_nodot + "."	+	"loc_impressions",				#no such hive tables
-    "reco_prod_" + username_nodot + "." + "ltopic_impressions",
-    "reco_prod_" + username_nodot + "." + "similar_impressions",
-    "reco_prod_" + username_nodot + "." + "incidences",
-    "reco_prod_" + username_nodot + "." + "active_users",
-    "reco_prod_" + username_nodot + "." + "logins",
-    "reco_prod_" + username_nodot + "." + "login_attributes",
-    "reco_prod_" + username_nodot + "." + "user_attributes",
-    "reco_prod_" + username_nodot + "." + "user_activities"
-]
+                "reco_prod_" + username_nodot + "." + "ltopic_impressions",
+                "reco_prod_" + username_nodot + "." + "similar_impressions",
+                "reco_prod_" + username_nodot + "." + "incidences",
+                "reco_prod_" + username_nodot + "." + "active_users", "reco_prod_" + username_nodot + "." + "logins",
+                "reco_prod_" + username_nodot + "." + "login_attributes",
+                "reco_prod_" + username_nodot + "." + "user_attributes",
+                "reco_prod_" + username_nodot + "." + "user_activities"]
 
 for db_table in set_db_table:
     print("==>Table:" + db_table)

@@ -5,7 +5,6 @@
 #	Tested Environment:		Macbook Pro w/ Python 3.9
 #	Required Libraries:		N/A
 ######################################################################################
-import copy
 import heapq
 import pprint
 import sys
@@ -72,7 +71,7 @@ class SingleSourceShortestPath:
         helper_visualize_shortest_path_result(dist)
         return dist
 
-    def bellman_ford_algorithm(self, graph: Dict[str, List[Tuple[str, int]]]) -> None:
+    def bellman_ford_algorithm(self, graph: Dict[str, List[Tuple[str, int]]]):
         """
         Algorithm introduction links: https://leetcode.com/explore/learn/card/graph/622/single-source-shortest-path-algorithm/3864/
         :param graph:
@@ -101,26 +100,25 @@ class SingleSourceShortestPath:
         dp: List[List[(int, int)]] = [[(sys.maxsize, None)] * n_node for _ in range(n_node)]
         for i in range(n_node):
             dp[i][0] = (0, None)
-        print("initial DP = " )
+        print("initial DP = ")
         print_dp(dp)
 
         # step 3, DP
-        for i in range(1, n_node ):
+        for i in range(1, n_node):
             print("=======Iteration = " + str(i) + "===========")
             for s, t, d in edges:
-                print('processing edge from ' + str(s)  + " to " + str(t) + " with weight " + str(d))
-                if dp[i][t][0] > dp[i-1][s][0] + graph[s][t]:
+                print('processing edge from ' + str(s) + " to " + str(t) + " with weight " + str(d))
+                if dp[i][t][0] > dp[i - 1][s][0] + graph[s][t]:
                     print("updating")
-                    dp[i][t] = (dp[i-1][s][0] + graph[s][t], s)
+                    dp[i][t] = (dp[i - 1][s][0] + graph[s][t], s)
                 print_dp(dp)
 
         dist = dict()
-        map_idx_to_node = {v:k for k,v in map_node_to_idx.items()}
+        map_idx_to_node = {v: k for k, v in map_node_to_idx.items()}
         for t, dist_p in enumerate(dp[-1]):
-            dist[map_idx_to_node[t]] = (dist_p[0],map_idx_to_node[dist_p[1]] if dist_p[1] is not None else '-')
+            dist[map_idx_to_node[t]] = (dist_p[0], map_idx_to_node[dist_p[1]] if dist_p[1] is not None else '-')
         helper_visualize_shortest_path_result(dist)
         return dist
-
 
 
 if __name__ == "__main__":
