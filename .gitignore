@@ -1,4 +1,8 @@
 .idea
 .pytest_cache
-
+.gradle
+.DS_Store
+*/.DS_Store
+*/*/*/.DS_Store
+*/*/.DS_Store
 *.pyc

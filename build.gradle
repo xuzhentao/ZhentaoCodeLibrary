@@ -1,0 +1,19 @@
+apply plugin: "base"
+
+task pytest(type: Exec){
+    workingDir "./"
+    commandLine 'python3', '-m',  'pytest' , 'test'
+    doLast {
+        println "Executed!"
+    }
+}
+
+
+task install(type: Exec){
+    workingDir "./"
+    commandLine 'pip', 'install', '-r', 'requirements.txt'
+    doLast {
+        println "installed!"
+    }
+}
+
