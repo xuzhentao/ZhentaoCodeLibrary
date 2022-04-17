@@ -1,13 +1,5 @@
 apply plugin: "base"
 
-task pytest(type: Exec){
-    workingDir "./"
-    commandLine 'python3', '-m',  'pytest' , 'test'
-    doLast {
-        println "Executed!"
-    }
-}
-
 
 task install(type: Exec){
     workingDir "./"
@@ -17,3 +9,15 @@ task install(type: Exec){
     }
 }
 
+
+task pytest(type: Exec){
+    workingDir "./"
+    commandLine 'python3', '-m',  'pytest' , 'test'
+    doLast {
+        println "Executed!"
+    }
+}
+
+task test{
+    dependsOn pytest
+}
